@@ -1,0 +1,9 @@
+.thumbnail img {
+    max-height: 500px;
+    max-width: 70px;
+}
+.mName {
+    font-weight: bold;
+    font-size: 20px;
+}
+

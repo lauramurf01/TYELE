@@ -1,0 +1,19 @@
+{{# each subjects}}
+    <div class="row">
+    {{# each this}}
+        <div class="col-sm-5 col-md-4">
+            <div class="thumbnail">
+                <img src={{ this.imagePath}}
+                     alt="..." class="img-responsive>
+            <div class="caption">
+                <p class="mName">{{this.title}}</p>
+            </div>
+        </div>
+    </div>
+{{/each}}
+
+{{/each}}
+
+
+
+
