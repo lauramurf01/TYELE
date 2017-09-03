@@ -15,11 +15,14 @@ router.get('/', function(req, res, next) {
 
       for (var i =0; i < docs.length; i+=chunkSize){
         subjectChunks.push(docs.slice(i,i + chunkSize));
-      }
-     // res.render('user/signin', { title: 'TYELE System', subjects: subjectChunks });
+     }
         var messages = req.flash('error');
         res.render('user/signin',{csrfToken: req.csrfToken(),messages: messages, hasErrors: messages.length >0});
     });
 });
+
+
+
+
 
 module.exports = router;

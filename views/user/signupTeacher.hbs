@@ -1,0 +1,45 @@
+{{> header}}
+
+<ul class="breadcrumb">
+  <li><a href='admin'>Home</a></li>
+  <li><a href='signupTeacher'>Create new Teacher</a></li>
+</ul>
+<div class = "row">
+    <div class="col-md-4 col-md-offset-4">
+        <h1>Sign Up</h1>
+        {{#if hasErrors}}
+            <div class=alert alert-danger">
+        {{# each messages}}
+            <p>{{this}}</p>
+        {{/each}}
+        </div>
+        {{/if}}
+        <form action="/user/signupTeacher" method="post">
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="text" id="email" name="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control">
+            <input type="hidden" name="accounttype" value="teacher">
+
+             <h3> Subjects Taught </h3>
+            <input type="checkbox" name="english" value="true"> English<br>
+            <input type="checkbox" name="german" value="true"> German <br>
+            <input type="checkbox" name="gaeilge" value="true"> Gaeilge <br>
+            <input type="checkbox" name="homeEconomics" value="true"> Home Economics <br>
+            <input type="checkbox" name="business" value="true"> Business <br>
+            <input type="checkbox" name="maths" value="true"> Maths <br>
+            <input type="checkbox" name="french" value="true"> French <br>
+            <input type="checkbox" name="religion" value="true"> Religion <br>
+            <input type="checkbox" name="history" value="true"> History <br>
+            <input type="checkbox" name="music" value="true"> Music <br>
+
+            <input type="hidden" name="_csrf" value="{{ csrfToken}}">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+
+    </div>
+</div>
+

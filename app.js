@@ -18,15 +18,13 @@ var userRoutes = require('./routes/user');
 
 var app = express();
 
-mongoose.connect('localhost:27017/tele');
+mongoose.connect('mongodb://admin:admin@ds127492.mlab.com:27492/tyele');
 require('./config/passport');
 
 // view engine setup
 app.engine('hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,8 +47,6 @@ app.use(function (req,res,next){
   res.locals.session = req.session;
   next();
 });
-
-
 
 app.use('/user', userRoutes);
 app.use('/', routes);

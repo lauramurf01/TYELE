@@ -3,22 +3,38 @@ var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
 var Subject = require('../models/subject');
+var User = require('../models/user');
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
+//routes for if a user is logged in 
 router.get('/profile',isLoggedIn, function (req,res,next) {
-    Subject.find(function(err, docs) {
-        var subjectChunks = [];
-        var chunkSize = 3;
-
-        for (var i = 0; i < docs.length; i += chunkSize) {
-            subjectChunks.push(docs.slice(i, i + chunkSize));
+     User.findOne({email: req.user.email}, function(err, user) {
+        
+        if (user.type == "student"){
+            Subject.find(function(err, docs) {
+                res.render('user/profile', {title: 'TYELE System', subjects: docs});  
+            });
         }
-        res.render('user/profile', {title: 'TYELE System', subjects: subjectChunks});
+        else if (user.type == "teacher"){
+            Subject.find({title:{"$in":user.module}},function(err, subject){
+            console.log(subject)
+                res.render('user/teacher', {title: 'TYELE System', subjects: subject});  
+            }); 
+        }
+        else if (user.type == "admin"){
+            res.render('user/admin', {title: 'TYELE System'});
+        }
+        else if (user.type == "other"){
+            User.find({'achievement':{$in:user.requirements}}, function(err,students) {
+               res.render('user/achievement', {title: 'TYELE System', students:students}); 
+            });
+        }
     });
-    });
+});
 
+//route for when a user is logged out
 router.get('/logout',isLoggedIn, function (req,res, next) {
     req.logout();
     res.redirect('/user/signin');
@@ -28,15 +44,75 @@ router.use('/user/signin', notLoggedIn, function (req, res, next) {
     next();
 });
 
-// /route for sign up
-router.get('/signup',function (req,res,next) {
+
+// /route for achievements
+router.get('/sAchievement',function (req,res,next) {
     var messages = req.flash('error');
-    res.render('user/signup',{csrfToken: req.csrfToken(),messages: messages, hasErrors: messages.length >0});
+    res.render('user/sAchievement');
 });
 
-router.post('/signup' , passport.authenticate('local.signup',{
+// /route for achievements
+router.get('/notification',function (req,res,next) {
+    var messages = req.flash('error');
+    res.render('user/notifi');
+});
+
+// /route for subjects
+router.get('/subject',function (req,res,next) {
+    var messages = req.flash('error');
+    res.render('user/Subject');
+});
+
+// /route for events
+//router.get('/events',function (req,res,next) {
+   // var messages = req.flash('error');
+    //res.render('user/events');
+//});
+// /route for sign up
+router.get('/signupStudent',function (req,res,next) {
+    var messages = req.flash('error');
+    res.render('user/signupStudent',{csrfToken: req.csrfToken(),messages: messages, hasErrors: messages.length >0});
+});
+
+router.post('/signupStudent' , passport.authenticate('local.signup',{
     successRedirect: '/user/profile',
-    failureRedirect: '/user/signup',
+    failureRedirect: '/user/signupStudent',
+    failureFlash: true
+}));
+
+// /route for sign up
+router.get('/signupTeacher',function (req,res,next) {
+    var messages = req.flash('error');
+    res.render('user/signupTeacher',{csrfToken: req.csrfToken(),messages: messages, hasErrors: messages.length >0});
+});
+
+router.post('/signupTeacher' , passport.authenticate('local.signup',{
+    successRedirect: '/user/profile',
+    failureRedirect: '/user/signupTeacher',
+    failureFlash: true
+}));
+
+// /route for sign up
+router.get('/signupOther',function (req,res,next) {
+    var messages = req.flash('error');
+    res.render('user/signupOther',{csrfToken: req.csrfToken(),messages: messages, hasErrors: messages.length >0});
+});
+
+router.post('/signupOther' , passport.authenticate('local.signup',{
+    successRedirect: '/user/profile',
+    failureRedirect: '/user/signupOther',
+    failureFlash: true
+}));
+
+// /route for sign up
+router.get('/signupAdmin',function (req,res,next) {
+    var messages = req.flash('error');
+    res.render('user/signupAdmin',{csrfToken: req.csrfToken(),messages: messages, hasErrors: messages.length >0});
+});
+
+router.post('/signupAdmin' , passport.authenticate('local.signup',{
+    successRedirect: '/user/profile',
+    failureRedirect: '/user/signupAdmin',
     failureFlash: true
 }));
 
@@ -69,3 +145,4 @@ function notLoggedIn(req,res, next) {
     }
     res.redirect('/user/signin');
 }
+

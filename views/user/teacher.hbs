@@ -1,7 +1,7 @@
 {{> header}}
 
 <ul class="breadcrumb">
-  <li><a href='/profile'>Home</a></li>
+  <li><a href='profile'>Home</a></li>
 </ul>
 
 
@@ -16,34 +16,15 @@
                                  alt="..." class="img-responsive>
             <div class="caption">
                     <p class="mName">{{this.title}}</p>
-                     <form action='subject'>
-                        <input type="submit" value="View subject page" />
+                    <form action='subject'>
+                        <input type="submit" value="View Subject" />
                     </form>
             </div>
             </div>
         </div>
         </div>
 {{/each}}
-<div class ="container">
-    <div class="row">
-    
-            <div class="col-sm-5 col-md-4">
-                <div class="thumbnail">
-                    <img src={{ this.imagePath}}
-                                 alt="..." class="img-responsive>
-            <div class="caption">
-                    <p class="mName">Student Achievements</p>
-                   
-                    <form action='sAchievement'>
-                        <input type="submit" value="View Achievements" />
-                    </form>
-              
-            </div>
-            </div>
-        </div>
-        </div>
-
-        <div class ="container">
+ <div class ="container">
     <div class="row">
     
             <div class="col-sm-5 col-md-4">
@@ -61,14 +42,6 @@
             </div>
         </div>
         </div>
-
-
-
-
 {{> calandar}}
-
-
-{{> timetable}}
-
 
 {{> footer}}

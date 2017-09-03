@@ -1,10 +1,20 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
+//var contactEvent = require("events.js")
+
+
 
 var userSchema = new Schema({
+	name: {type:String},
     email: {type:String, required: true},
-    password: {type:String, required:true}
+    password: {type:String, required:true},
+    type: {type:String},
+    achievement: [String],
+    module:[String],
+    requirements:[String],
+    description:[String]
+
 });
 
 //creating an encrypted password

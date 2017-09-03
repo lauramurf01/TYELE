@@ -2,36 +2,40 @@ var Subject = require('../models/subject');
 
 var mongoose = require('mongoose');
 
-mongoose.connect('localhost:27017/tele');
+mongoose.connect('mongodb://admin:admin@ds127492.mlab.com:27492/tyele');
 
 var subjects = [
     new Subject({
-        imagePath: 'https://img.clipartfest.com/65e426dfc8f0a1a2890a7bf220d886b4_school-books-pictures-of-school-books_1200-1200.jpeg',
-        title:'blah'
-}),
+        imagePath: '../public/images/stackbooks.jpg',
+        title:'English'
+    }),
     new Subject({
-        imagePath: 'https://img.clipartfest.com/65e426dfc8f0a1a2890a7bf220d886b4_school-books-pictures-of-school-books_1200-1200.jpeg',
+        imagePath: 'http://www.freestockphotos.name/wallpaper-original/wallpapers/school-books-2524.jpg',
         title:'German'
     }),
     new Subject({
-        imagePath: 'https://img.clipartfest.com/65e426dfc8f0a1a2890a7bf220d886b4_school-books-pictures-of-school-books_1200-1200.jpeg',
+        imagePath: 'http://www.freestockphotos.name/wallpaper-original/wallpapers/school-books-2524.jpg',
         title:'Gaeilge'
     }),
     new Subject({
-        imagePath: 'https://img.clipartfest.com/65e426dfc8f0a1a2890a7bf220d886b4_school-books-pictures-of-school-books_1200-1200.jpeg',
+        imagePath: 'http://www.freestockphotos.name/wallpaper-original/wallpapers/school-books-2524.jpg',
         title: 'Home Economics'
     }),
     new Subject({
-        imagePath: 'https://img.clipartfest.com/65e426dfc8f0a1a2890a7bf220d886b4_school-books-pictures-of-school-books_1200-1200.jpeg',
+        imagePath: 'http://www.freestockphotos.name/wallpaper-original/wallpapers/school-books-2524.jpg',
         title: 'Business'
+    }),
+    new Subject({
+        imagePath: 'http://www.freestockphotos.name/wallpaper-original/wallpapers/school-books-2524.jpg',
+        title: 'Student Achievements'
     })
     ];
 
 var done = 0;
-for (var i = 0; i <5; i++){
+for (var i = 0; i <subjects.length; i++){
     subjects[i].save(function (err, result) {
         done++;
-        if (done === 5){
+        if (done === subjects.length ){
             exit();
         }
 
